@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Aprendices</title>
+
+    <link rel="stylesheet" href="{% static 'prueba\css\estilo.css' %}">
+</head>
+<body>
+
+    <h1>Listado de Aprendices</h1>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Tipo Doc.</th>
+                <th>Documento</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Ficha</th>
+                <th>Programa</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aprendiz in aprendices %}
+            <tr>
+                <td>{{ aprendiz.nombre }}</td>
+                <td>{{ aprendiz.apellido }}</td>
+                <td>{{ aprendiz.tipo_documento }}</td>
+                <td>{{ aprendiz.documento }}</td>
+                <td>{{ aprendiz.telefono }}</td>
+                <td>{{ aprendiz.correo }}</td>
+                <td>{{ aprendiz.ficha }}</td>
+                <td>
+                    {% if aprendiz.programa %}
+                        {{ aprendiz.programa.nombre }}
+                    {% else %}
+                        Sin programa
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No hay aprendices registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

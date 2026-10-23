@@ -1,0 +1,94 @@
+
+/* Estilos generales */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f4f0;
+    margin: 0;
+    padding: 30px 20px;
+    color: #333;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    color: #198754;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+}
+
+/* Encabezados */
+thead {
+    background-color: #198754;
+    color: white;
+}
+
+th {
+    padding: 15px 12px;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Celdas */
+td {
+    padding: 13px 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+/* Colores alternos */
+tbody tr:nth-child(even) {
+    background-color: #f2f8f3;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Efecto al pasar el cursor */
+tbody tr:hover {
+    background-color: #d9f2e2;
+    transition: background-color 0.3s ease;
+}
+
+/* Mensaje cuando no hay aprendices */
+td[colspan="8"] {
+    padding: 25px;
+    color: #777;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Diseño adaptable para pantallas pequeñas */
+@media screen and (max-width: 900px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 9px 7px;
+    }
+}
