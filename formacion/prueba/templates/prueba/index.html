@@ -3,52 +3,186 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Aprendices</title>
 
-    <link rel="stylesheet" href="{% static 'prueba\css\estilo.css' %}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            padding: 35px;
+        }
+        .encabezado {
+            background: linear-gradient(135deg, #0f172a, #1e40af);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+        }
+        .encabezado h1 { font-size: 30px; margin-bottom: 8px; }
+        .encabezado p { color: #cbd5e1; font-size: 15px; }
+        .contenedor {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        .barra-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        .barra-superior h2 { font-size: 21px; color: #0f172a; }
+        .btn-crear {
+            display: inline-block;
+            background: #16a34a;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-crear:hover { background: #15803d; transform: translateY(-2px); }
+        .mensaje {
+            background: #dcfce7;
+            color: #166534;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            border-left: 5px solid #16a34a;
+            border-radius: 8px;
+        }
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 950px; }
+        thead { background: #1e3a8a; color: white; }
+        th {
+            padding: 16px 14px;
+            text-align: left;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+        }
+        td { padding: 15px 14px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        tbody tr:nth-child(even) { background: #f8fafc; }
+        tbody tr:hover { background: #eff6ff; }
+        tbody tr:last-child td { border-bottom: none; }
+
+        .btn-editar {
+            display: inline-block;
+            background: #0f766e;
+            color: white;
+            padding: 8px 13px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-editar:hover { background: #115e59; transform: translateY(-1px); }
+
+        .btn-eliminar {
+            display: inline-block;
+            background: #dc2626;
+            color: white;
+            padding: 8px 13px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-eliminar:hover { background: #991b1b; transform: translateY(-1px); }
+
+        .acciones { display: flex; gap: 8px; }
+        .sin-registros { text-align: center; padding: 35px; color: #64748b; font-size: 15px; }
+        .pie { margin-top: 18px; color: #64748b; font-size: 13px; text-align: right; }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .encabezado { padding: 22px; }
+            .encabezado h1 { font-size: 24px; }
+            .contenedor { padding: 15px; }
+            .barra-superior { align-items: flex-start; flex-direction: column; }
+            .btn-crear { width: 100%; text-align: center; }
+        }
+    </style>
 </head>
 <body>
-
-    <h1>Listado de Aprendices</h1>
-
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Tipo Doc.</th>
-                <th>Documento</th>
-                <th>Teléfono</th>
-                <th>Correo</th>
-                <th>Ficha</th>
-                <th>Programa</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for aprendiz in aprendices %}
-            <tr>
-                <td>{{ aprendiz.nombre }}</td>
-                <td>{{ aprendiz.apellido }}</td>
-                <td>{{ aprendiz.tipo_documento }}</td>
-                <td>{{ aprendiz.documento }}</td>
-                <td>{{ aprendiz.telefono }}</td>
-                <td>{{ aprendiz.correo }}</td>
-                <td>{{ aprendiz.ficha }}</td>
-                <td>
-                    {% if aprendiz.programa %}
-                        {{ aprendiz.programa.nombre }}
-                    {% else %}
-                        Sin programa
-                    {% endif %}
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="8">No hay aprendices registrados.</td>
-            </tr>
+    <header class="encabezado">
+        <h1>Panel de Aprendices</h1>
+        <p>Centro de Formación | Gestión y administración de aprendices</p>
+    </header>
+    <main class="contenedor">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mensaje">{{ message }}</div>
             {% endfor %}
-        </tbody>
-    </table>
-
+        {% endif %}
+        <div class="barra-superior">
+            <h2>Listado de aprendices</h2>
+            <a href="{% url 'crear_aprendiz' %}" class="btn-crear">+ Crear aprendiz</a>
+        </div>
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Tipo Doc.</th>
+                        <th>Documento</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Ficha</th>
+                        <th>Programa</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aprendiz in aprendices %}
+                    <tr>
+                        <td>{{ aprendiz.nombre }}</td>
+                        <td>{{ aprendiz.apellido }}</td>
+                        <td>{{ aprendiz.tipo_documento }}</td>
+                        <td>{{ aprendiz.documento }}</td>
+                        <td>{{ aprendiz.telefono }}</td>
+                        <td>{{ aprendiz.correo }}</td>
+                        <td>{{ aprendiz.ficha }}</td>
+                        <td>
+                            {% if aprendiz.programa %}
+                                {{ aprendiz.programa.nombre }}
+                            {% else %}
+                                Sin programa
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="acciones">
+                                <a href="{% url 'editar_aprendiz' aprendiz.documento %}" class="btn-editar">Editar</a>
+                                <a href="{% url 'eliminar_aprendiz' aprendiz.documento %}" class="btn-eliminar">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="sin-registros">No hay aprendices registrados. ¡Crea el primero!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pie">Sistema de gestión de aprendices</div>
+    </main>
 </body>
 </html>
